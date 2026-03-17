@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATTENDANCE TRACKER</title>
+    <link rel="stylesheet" href="styleForm.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Optional: minor spacing between sections */
+        section {
+            margin-bottom: 50px;
+            padding: 20px;
+            border-bottom: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Section 1: Student Details ===== -->
+    <section id="details">
+        <center><h1>STUDENT CLASS ATTENDANCE TRACKER</h1></center>
+        <h2>Enter the credentials below</h2>
+        <form id="detailsForm">
+            Enter Your Name: <input type="text" id="student_name"><br><br>
+            Enter Your Registration ID: <input type="text" id="reg_id"><br><br>
+            Enter Your College Email ID: <input type="text" id="email"><br><br>
+            Enter Your Branch & Degree: <input type="text" id="branch"><br><br>
+            <button type="button" onclick="showLog()">CONTINUE</button>
+        </form>
+    </section>
+
+    <!-- ===== Section 2: Attendance Log ===== -->
+    <section id="log" style="display:none;">
+        <center><h1>ATTENDANCE LOG</h1>
+        <table>
+            <tr>
+                <th>SUBJECT</th>
+                <th>PRESENT</th>
+                <th>ABSENT</th>
+            </tr>
+            <tr>
+                <td>MATHS</td>
+                <td><input type="radio" name="math" value="present"></td>
+                <td><input type="radio" name="math" value="absent"></td>
+            </tr>
+            <tr>
+                <td>PHYSICS</td>
+                <td><input type="radio" name="physics" value="present"></td>
+                <td><input type="radio" name="physics" value="absent"></td>
+            </tr>
+            <tr>
+                <td>EG</td>
+                <td><input type="radio" name="eg" value="present"></td>
+                <td><input type="radio" name="eg" value="absent"></td>
+            </tr>
+            <tr>
+                <td>DS</td>
+                <td><input type="radio" name="ds" value="present"></td>
+                <td><input type="radio" name="ds" value="absent"></td>
+            </tr>
+            <tr>
+                <td>CO</td>
+                <td><input type="radio" name="co" value="present"></td>
+                <td><input type="radio" name="co" value="absent"></td>
+            </tr>
+            <tr>
+                <td>DTI</td>
+                <td><input type="radio" name="dti" value="present"></td>
+                <td><input type="radio" name="dti" value="absent"></td>
+            </tr>
+        </table>
+        <br>
+        <button type="button" onclick="showPercentage()">SAVE ATTENDENCE & CONTINUE</button>
+        
+        </center>
+    </section>
+
+    <!-- ===== Section 3: Attendance Percentage ===== -->
+    <section id="percentage" style="display:none;">
+        <h1>ATTENDANCE PERCENTAGE CALCULATOR</h1>
+        <center>
+        <table>
+            <tr>
+                <th>Subject</th>
+                <th>Total Classes</th>
+                <th>Attended</th>
+                <th>Attendance %</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>MATHS</td>
+                <td><input type="number" id="total_maths" value="0"></td>
+                <td><input type="number" id="attended_maths" value="0"></td>
+                <td id="percent_maths">0%</td>
+                <td id="status_maths"></td>
+            </tr>
+            <tr>
+                <td>PHYSICS</td>
+                <td><input type="number" id="total_physics" value="0"></td>
+                <td><input type="number" id="attended_physics" value="0"></td>
+                <td id="percent_physics">0%</td>
+                <td id="status_physics"></td>
+            </tr>
+            <tr>
+                <td>EG</td>
+                <td><input type="number" id="total_eg" value="0"></td>
+                <td><input type="number" id="attended_eg" value="0"></td>
+                <td id="percent_eg">0%</td>
+                <td id="status_eg"></td>
+            </tr>
+            <tr>
+                <td>DS</td>
+                <td><input type="number" id="total_ds" value="0"></td>
+                <td><input type="number" id="attended_ds" value="0"></td>
+                <td id="percent_ds">0%</td>
+                <td id="status_ds"></td>
+            </tr>
+            <tr>
+                <td>CO</td>
+                <td><input type="number" id="total_co" value="0"></td>
+                <td><input type="number" id="attended_co" value="0"></td>
+                <td id="percent_co">0%</td>
+                <td id="status_co"></td>
+            </tr>
+            <tr>
+                <td>DTI</td>
+                <td><input type="number" id="total_dti" value="0"></td>
+                <td><input type="number" id="attended_dti" value="0"></td>
+                <td id="percent_dti">0%</td>
+                <td id="status_dti"></td>
+            </tr>
+        </table>
+        </center>
+        <br>
+        <button onclick="calculate()">Calculate Attendance</button>
+    </section>
+
+    <!-- ===== JavaScript to Navigate Sections & Calculate ===== -->
+    <script>
+        function showLog() {
+            document.getElementById('details').style.display = 'none';
+            document.getElementById('log').style.display = 'block';
+        }
+
+        function showPercentage() {
+            document.getElementById('log').style.display = 'none';
+            document.getElementById('percentage').style.display = 'block';
+        }
+
+        function calculate() {
+            const subjects = ["maths","physics","eg","ds","co","dti"];
+            subjects.forEach(sub => {
+                let total = parseInt(document.getElementById("total_" + sub).value) || 0;
+                let attended = parseInt(document.getElementById("attended_" + sub).value) || 0;
+                let percent = total === 0 ? 0 : Math.round((attended / total) * 100);
+
+                let percentCell = document.getElementById("percent_" + sub);
+                let statusCell = document.getElementById("status_" + sub);
+
+                percentCell.innerText = percent + "%";
+
+                if (percent >= 75) {
+                    percentCell.className = "good";
+                    let skip = Math.floor((attended / 0.75) - total);
+                    statusCell.innerText = "Can skip " + skip + " classes";
+                    statusCell.className = "good";
+                } else {
+                    percentCell.className = "bad";
+                    let need = Math.ceil((0.75 * total - attended) / (1 - 0.75));
+                    statusCell.innerText = "Attend next " + need + " classes";
+                    statusCell.className = "bad";
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

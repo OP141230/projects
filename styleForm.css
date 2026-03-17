@@ -1,0 +1,72 @@
+body {
+    background: linear-gradient(135deg, #6ec6ff, #87cefa, #bfe9ff);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+h1 {
+    color: #003366;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+    font-weight: 600;
+}
+
+form {
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(8px);
+    margin: 40px auto;
+    width: 340px;
+    padding: 25px;
+    border-radius: 14px;
+    border: 1px solid rgba(30,144,255,0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+input, textarea {
+    font-family: 'Poppins', sans-serif;
+    display: block;
+    margin: 14px auto;
+    width: 92%;
+    padding: 10px;
+    border-radius: 7px;
+    border: 1px solid #87cefa;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+input:focus, textarea:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 6px rgba(30,144,255,0.5);
+    outline: none;
+}
+
+button {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    color: white;
+    border: none;
+    border-radius: 7px;
+    padding: 10px 22px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #00bfff, #87cefa);
+    transform: translateY(-2px) scale(1.05);
+    color: #003366;
+}
+
+/* Added green/red text styles for attendance status */
+.good {
+    color: green;
+    font-weight: bold;
+}
+
+.bad {
+    color: red;
+    font-weight: bold;
+}
