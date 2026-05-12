@@ -3,69 +3,119 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Interactive Periodic Table of Elements</title>
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <title>StayEasy Hotel Booking</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <header>
-    <h1>⚛ <center>Periodic Table</center> </h1>
-    
-  </header>
-
-  <div class="controls">
-    <input type="text" id="searchInput" placeholder="Search element, symbol, or atomic number..." />
-    <div class="filter-buttons">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="alkali-metal">Alkali Metals</button>
-      <button class="filter-btn" data-filter="alkaline-earth">Alkaline Earth</button>
-      <button class="filter-btn" data-filter="transition-metal">Transition Metals</button>
-      <button class="filter-btn" data-filter="post-transition">Post-Transition</button>
-      <button class="filter-btn" data-filter="metalloid">Metalloids</button>
-      <button class="filter-btn" data-filter="nonmetal">Nonmetals</button>
-      <button class="filter-btn" data-filter="halogen">Halogens</button>
-      <button class="filter-btn" data-filter="noble-gas">Noble Gases</button>
-      <button class="filter-btn" data-filter="lanthanide">Lanthanides</button>
-      <button class="filter-btn" data-filter="actinide">Actinides</button>
+  <!-- NAVBAR -->
+  <div class="navbar">
+    <h1>🏨 StayEasy</h1>
+    <div class="nav-links">
+      <a href="#hotels">Hotels</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </div>
   </div>
 
-  <div class="table-wrapper">
-    <div class="periodic-grid" id="periodicGrid"></div>
+  <!-- HERO SECTION -->
+  <div class="hero">
+    <h2>Find Your Perfect Stay</h2>
+    <p>Search from hundreds of hotels at the best prices!</p>
+
+    <div class="search-box">
+      <input type="text" id="cityInput" placeholder="Enter city name..." />
+      <input type="date" id="checkIn" />
+      <input type="date" id="checkOut" />
+      <select id="guests">
+        <option value="1">1 Guest</option>
+        <option value="2">2 Guests</option>
+        <option value="3">3 Guests</option>
+        <option value="4">4 Guests</option>
+      </select>
+      <button onclick="searchHotels()">Search</button>
+    </div>
   </div>
 
-  <div class="legend">
-    <div class="legend-item"><span class="dot alkali-metal"></span>Alkali Metal</div>
-    <div class="legend-item"><span class="dot alkaline-earth"></span>Alkaline Earth</div>
-    <div class="legend-item"><span class="dot transition-metal"></span>Transition Metal</div>
-    <div class="legend-item"><span class="dot post-transition"></span>Post-Transition</div>
-    <div class="legend-item"><span class="dot metalloid"></span>Metalloid</div>
-    <div class="legend-item"><span class="dot nonmetal"></span>Nonmetal</div>
-    <div class="legend-item"><span class="dot halogen"></span>Halogen</div>
-    <div class="legend-item"><span class="dot noble-gas"></span>Noble Gas</div>
-    <div class="legend-item"><span class="dot lanthanide"></span>Lanthanide</div>
-    <div class="legend-item"><span class="dot actinide"></span>Actinide</div>
+  <!-- HOTEL LISTING SECTION -->
+  <div id="hotels" class="section">
+    <h2 class="section-title">Available Hotels</h2>
+    <div class="hotel-grid" id="hotelGrid">
+      <!-- Hotels loaded by JS -->
+    </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay">
-    <div class="modal" id="modal">
-      <button class="modal-close" id="modalClose">✕</button>
-      <div class="modal-header">
-        <div class="modal-number" id="modalNumber"></div>
-        <div class="modal-symbol" id="modalSymbol"></div>
-        <div class="modal-name" id="modalName"></div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-row"><span>Category</span><strong id="modalCategory"></strong></div>
-        <div class="modal-row"><span>Atomic Mass</span><strong id="modalMass"></strong></div>
-        <div class="modal-row"><span>Period</span><strong id="modalPeriod"></strong></div>
-        <div class="modal-row"><span>Group</span><strong id="modalGroup"></strong></div>
-        <div class="modal-row"><span>Electron Config</span><strong id="modalConfig"></strong></div>
-        <div class="modal-row"><span>State at Room Temp</span><strong id="modalState"></strong></div>
+  <!-- BOOKING MODAL -->
+  <div id="bookingModal" class="modal" style="display:none;">
+    <div class="modal-box">
+      <h3>Book Your Room</h3>
+      <p id="modalHotelName"></p>
+
+      <label>Your Name:</label>
+      <input type="text" id="bookingName" placeholder="Full name" />
+
+      <label>Email:</label>
+      <input type="email" id="bookingEmail" placeholder="email@example.com" />
+
+      <label>Phone:</label>
+      <input type="text" id="bookingPhone" placeholder="Phone number" />
+
+      <label>Room Type:</label>
+      <select id="roomType">
+        <option>Standard Room</option>
+        <option>Deluxe Room</option>
+        <option>Suite</option>
+      </select>
+
+      <div class="modal-btns">
+        <button onclick="confirmBooking()">Confirm Booking</button>
+        <button class="cancel-btn" onclick="closeModal()">Cancel</button>
       </div>
     </div>
+  </div>
+
+  <!-- SUCCESS MESSAGE -->
+  <div id="successMsg" class="success-msg" style="display:none;">
+    ✅ Booking confirmed! Check your email for details.
+  </div>
+
+  <!-- ABOUT SECTION -->
+  <div id="about" class="section about-section">
+    <h2 class="section-title">Why StayEasy?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h4>Best Prices</h4>
+        <p>We guarantee the lowest prices for all hotels listed on our site.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h4>Safe & Secure</h4>
+        <p>Your personal information is always safe with us.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📞</div>
+        <h4>24/7 Support</h4>
+        <p>Our support team is always available to help you out.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT SECTION -->
+  <div id="contact" class="section contact-section">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-form">
+      <input type="text" placeholder="Your Name" />
+      <input type="email" placeholder="Your Email" />
+      <textarea placeholder="Your Message" rows="4"></textarea>
+      <button onclick="sendMessage()">Send Message</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <p>© 2024 StayEasy. All rights reserved.</p>
+    <p>Made with ❤️ for travelers</p>
   </div>
 
   <script src="script.js"></script>
